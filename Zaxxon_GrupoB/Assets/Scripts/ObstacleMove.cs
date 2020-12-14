@@ -15,7 +15,7 @@ public class ObstacleMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        SpaceShip = GameObject.Find("Spaceship");
+        SpaceShip = GameObject.Find("ViperParent");
         spaceshipMove = SpaceShip.GetComponent<SpaceshipMove>();
     }
 
@@ -32,7 +32,7 @@ public class ObstacleMove : MonoBehaviour
         }
 
         //Asignamos una velocidad fija (de momento)
-        obstacleSpeed = 2.5f;
+        obstacleSpeed = spaceshipMove.speed;
         transform.Translate(Vector3.back * Time.deltaTime * obstacleSpeed);
  
     }

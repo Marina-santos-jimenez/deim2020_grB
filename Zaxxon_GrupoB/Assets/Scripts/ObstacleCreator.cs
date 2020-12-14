@@ -16,10 +16,13 @@ public class ObstacleCreator : MonoBehaviour
     private float randomNumber;
     Vector3 RandomPos;
     [SerializeField] float distanciaInicial = 5;
+    public GameObject Nave;
+    private SpaceshipMove spaceshipMove;
 
     // Start is called before the first frame update
     void Start()
     {
+        spaceshipMove = Nave.GetComponent<SpaceshipMove>();
         for (int n = 1; n <= 25; n++)
         {
 
@@ -49,7 +52,9 @@ public class ObstacleCreator : MonoBehaviour
         for (; ; )
         {
             CrearColumna();
-            yield return new WaitForSeconds(1f);
+            float interval = 4 / spaceshipMove.speed;
+            yield return new WaitForSeconds(interval);
+           
         }
 
     }

@@ -9,7 +9,7 @@ public class SpaceshipMove : MonoBehaviour
 
     //Variable PÚBLICA que indica la velocidad a la que se desplaza
     //La nave NO se mueve, son los obtstáculos los que se desplazan
-    public float speed = 3f;
+    public float speed;
 
     //Variable que determina cómo de rápido se mueve la nave con el joystick
     //De momento fija, ya veremos si aumenta con la velocidad o con powerUps
@@ -23,6 +23,7 @@ public class SpaceshipMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        speed = 1f;
         //Llamo a la corrutina que hace aumentar la velocidad
         StartCoroutine("Distancia");
         
@@ -32,7 +33,10 @@ public class SpaceshipMove : MonoBehaviour
     void Update()
     {
         //Ejecutamos la función propia que permite mover la nave con el joystick
-        MoverNave();
+        MoverNave(); 
+        
+         
+      
 
     }
 
@@ -41,13 +45,13 @@ public class SpaceshipMove : MonoBehaviour
     {
         //Bucle infinito que suma 10 en cada ciclo
         //El segundo parámetro está vacío, por eso es infinito
-        for(int n = 0; ; n += 10)
+        for(int n = 0; ; n ++)
         {
             //Cambio el texto que aparece en pantalla
-            TextDistance.text = "DISTANCIA: " + n;
+            TextDistance.text = "DISTANCIA: " + n * speed;
 
             //Ejecuto cada ciclo esperando 1 segundo
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.1f);
         }
         
     }
@@ -78,7 +82,24 @@ public class SpaceshipMove : MonoBehaviour
         print(transform.position.x);
         float myPosX = transform.position.x;
         float myPosY = transform.position.y;
+        checkRestrX(myPosX, desplX);
+        checkRestrY(myPosY, desplY);
 
+
+
+        if (inMarginMoveX)
+        {
+            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * desplX);
+        }
+        if (inMarginMoveY)
+        {
+            transform.Translate(Vector3.up * Time.deltaTime * moveSpeed * desplY);
+        }
+
+     
+    }
+    void checkRestrX(float myPosX, float desplX)
+    {
         if (myPosX < -4.5 && desplX < 0)
         {
             inMarginMoveX = false;
@@ -95,6 +116,11 @@ public class SpaceshipMove : MonoBehaviour
         {
             inMarginMoveX = true;
         }
+    }
+
+
+    void checkRestrY(float myPosY, float desplY)
+    {
         //Retricción en Y
         if (myPosY < -0 && desplY < 0)
         {
@@ -113,17 +139,17 @@ public class SpaceshipMove : MonoBehaviour
             inMarginMoveY = true;
         }
 
-       
-        if (inMarginMoveX)
-        {
-            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * desplX);
-
-        }
-        if (inMarginMoveY)
-        {
-            transform.Translate(Vector3.up * Time.deltaTime * moveSpeed * desplY);
-        }
 
 
     }
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "obstacle")
+        {
+            Destroy(this.gameObject);
+        }
+       
+    }
+    
+
 }
