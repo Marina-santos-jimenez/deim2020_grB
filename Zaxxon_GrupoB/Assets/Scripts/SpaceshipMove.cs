@@ -153,7 +153,7 @@ public class SpaceshipMove : MonoBehaviour
     {
         if (other.gameObject.tag == "obstacle")
         {
-            Destroy(this.gameObject);
+            myMesh.enabled = false;
             
             speed = 0;
             print("Chocado");
