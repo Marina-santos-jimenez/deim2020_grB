@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI; //Importante importar esta librería para usar la UI
+using UnityEngine.UI; 
+using UnityEngine.SceneManagement;
 
 public class SpaceshipMove : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class SpaceshipMove : MonoBehaviour
     //Capturo el texto del UI que indicará la distancia recorrida
     [SerializeField] Text TextDistance;
     [SerializeField] MeshRenderer myMesh;
+    [SerializeField] GameObject ExplosionParticulas;
     
     // Start is called before the first frame update
     void Start()
@@ -153,12 +155,19 @@ public class SpaceshipMove : MonoBehaviour
     {
         if (other.gameObject.tag == "obstacle")
         {
-            myMesh.enabled = false;
-            
-            speed = 0;
-            print("Chocado");
+          StartCoroutine("choque");
         }
        
+    }
+    IEnumerator choque()
+    {
+            myMesh.enabled = false;
+            
+            ExplosionParticulas.SetActive(true);
+         
+            speed = 0;
+           yield return new WaitForSeconds (2f);
+            SceneManager.LoadScene(4);
     }
 
     

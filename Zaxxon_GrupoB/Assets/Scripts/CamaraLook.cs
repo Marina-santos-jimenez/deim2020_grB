@@ -20,7 +20,7 @@ public class CamaraLook : MonoBehaviour
     void Update()
     {
         transform.LookAt(playerPosition);
-        Vector3 targetPosition = new Vector3(playerPosition.position.x , playerPosition.position.y , transform.position.z);
+        Vector3 targetPosition = new Vector3(playerPosition.position.x , playerPosition.position.y +2, transform.position.z);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref camaraVelocity, smoothVelocity);
        
     }
