@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class CamaraLook : MonoBehaviour
 {
-    [SerializeField] Transform Tarjet;
-    [SerializeField] Transform PlayerPosition;
-    [SerializeField] float smoothVelocity = 0.3F;
+   
+    [SerializeField] Transform playerPosition;
+    [SerializeField] float smoothVelocity = 0.1f;
     [SerializeField] Vector3 camaraVelocity = Vector3.zero;
    
     
@@ -19,8 +19,8 @@ public class CamaraLook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.LookAt(Tarjet);
-        Vector3 targetPosition = new Vector3(PlayerPosition.position.x, PlayerPosition.position.y, transform.position.z);
+        transform.LookAt(playerPosition);
+        Vector3 targetPosition = new Vector3(playerPosition.position.x , playerPosition.position.y , transform.position.z);
         transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref camaraVelocity, smoothVelocity);
        
     }

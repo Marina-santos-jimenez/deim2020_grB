@@ -19,6 +19,7 @@ public class SpaceshipMove : MonoBehaviour
     private bool inMarginMoveY = true;
     //Capturo el texto del UI que indicará la distancia recorrida
     [SerializeField] Text TextDistance;
+    [SerializeField] MeshRenderer myMesh;
     
     // Start is called before the first frame update
     void Start()
@@ -45,15 +46,21 @@ public class SpaceshipMove : MonoBehaviour
     {
         //Bucle infinito que suma 10 en cada ciclo
         //El segundo parámetro está vacío, por eso es infinito
-        for(int n = 0; ; n ++)
+        for (int n = 0; ; n++)
         {
             //Cambio el texto que aparece en pantalla
             TextDistance.text = "DISTANCIA: " + n * speed;
 
+            //Cada ciclo aumenta la velocidad
+            if (speed < 30)
+            {
+                speed = speed + 0.2f;
+            }
+
             //Ejecuto cada ciclo esperando 1 segundo
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.25f);
         }
-        
+
     }
 
 
@@ -64,12 +71,12 @@ public class SpaceshipMove : MonoBehaviour
         //Ejemplos de Input que podemos usar más adelante
         if(Input.GetKey(KeyCode.Space))
         {
-            print("Se está pulsando");
+          
         }
 
         if(Input.GetButtonDown("Fire1"))
         {
-            print("Se está disparando");
+           
         }
         */
         //Variable float que obtiene el valor del eje horizontal y vertical
@@ -89,13 +96,13 @@ public class SpaceshipMove : MonoBehaviour
 
         if (inMarginMoveX)
         {
-            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * desplX);
+            transform.Translate(Vector3.right * Time.deltaTime * moveSpeed * desplX, Space.World);
         }
         if (inMarginMoveY)
         {
-            transform.Translate(Vector3.up * Time.deltaTime * moveSpeed * desplY);
+            transform.Translate(Vector3.up * Time.deltaTime * moveSpeed * desplY, Space.World);
         }
-
+        transform.rotation = Quaternion.Euler(desplY * -20, 0, desplX * -20);
      
     }
     void checkRestrX(float myPosX, float desplX)
@@ -147,9 +154,13 @@ public class SpaceshipMove : MonoBehaviour
         if (other.gameObject.tag == "obstacle")
         {
             Destroy(this.gameObject);
+            
+            speed = 0;
+            print("Chocado");
         }
        
     }
+
     
 
 }
