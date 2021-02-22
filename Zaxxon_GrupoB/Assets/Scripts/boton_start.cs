@@ -13,8 +13,8 @@ public class boton_start : MonoBehaviour
     
 
     // Update is called once per frame
-    void Update()
+   public void Quit()
     {
-        
+        Application.Quit();
     }
 }
