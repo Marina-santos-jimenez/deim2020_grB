@@ -8,7 +8,7 @@ public class BUTTON_BACK : MonoBehaviour
     // Start is called before the first frame update
     public void ButtonBack()
     {
-         SceneManager.LoadScene(2);
+         SceneManager.LoadScene("ui");
     }
 
     // Update is called once per frame

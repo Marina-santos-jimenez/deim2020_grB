@@ -170,7 +170,7 @@ public class SpaceshipMove : MonoBehaviour
             speed = 0;
             Efecto.PlayOneShot(sonido);
            yield return new WaitForSeconds (2f);
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene("GamerOver");
     }
 
     
