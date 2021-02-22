@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI; 
 using UnityEngine.SceneManagement;
 
+
+
 public class SpaceshipMove : MonoBehaviour
 {
     //--SCRIPT PARA MOVER LA NAVE --//
@@ -11,7 +13,8 @@ public class SpaceshipMove : MonoBehaviour
     //Variable PÚBLICA que indica la velocidad a la que se desplaza
     //La nave NO se mueve, son los obtstáculos los que se desplazan
     public float speed;
-
+   
+  
     //Variable que determina cómo de rápido se mueve la nave con el joystick
     //De momento fija, ya veremos si aumenta con la velocidad o con powerUps
     private float moveSpeed = 3f;
@@ -22,7 +25,8 @@ public class SpaceshipMove : MonoBehaviour
     [SerializeField] Text TextDistance;
     [SerializeField] MeshRenderer myMesh;
     [SerializeField] GameObject ExplosionParticulas;
-    
+    [SerializeField] AudioSource Efecto;
+    [SerializeField] AudioClip sonido;
     // Start is called before the first frame update
     void Start()
     {
@@ -161,11 +165,10 @@ public class SpaceshipMove : MonoBehaviour
     }
     IEnumerator choque()
     {
-            myMesh.enabled = false;
-            
+            myMesh.enabled = false;          
             ExplosionParticulas.SetActive(true);
-         
             speed = 0;
+            Efecto.PlayOneShot(sonido);
            yield return new WaitForSeconds (2f);
             SceneManager.LoadScene(4);
     }
